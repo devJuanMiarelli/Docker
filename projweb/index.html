@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste API</title>
+</head>
+<body>
+
+    <h2>Dados de Produtos da API:</h2>
+    <ul id="lista-produtos"></ul>
+
+    <script>
+        // URL da API JSONPlaceholder para usuários
+        var apiUrl = 'http://localhost:8081/list';
+
+        // Função para chamar a API
+        function chamarAPI() {
+            // Use a função fetch para fazer a chamada da API
+            fetch(apiUrl)
+                .then(response => response.json()) // Converte a resposta para JSON
+                .then(data => {
+                    // Manipule os dados aqui
+                    exibirUsuarios(data);
+                })
+                .catch(error => console.error('Erro na chamada da API:', error));
+        }
+
+        // Função para exibir os dados de usuários na página
+        function exibirUsuarios(produtos) {
+            var listaProdutos = document.getElementById('lista-produtos');
+            
+            // Limpa a lista antes de adicionar os novos itens
+            listaProdutos.innerHTML = '';
+
+            // Itera sobre os usuários e cria itens de lista para exibir
+            produtos.forEach(function(produto) {
+                var itemLista = document.createElement('li');
+                itemLista.textContent = `ID: ${produto.id}, Nome: ${produto.description}`;
+                listaProdutos.appendChild(itemLista);
+            });
+        }
+
+        // Chame a API quando a página for carregada
+        window.onload = chamarAPI;
+    </script>
+
+</body>
+</html>
